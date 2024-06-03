@@ -109,7 +109,42 @@ iii) A genome length <1.9 Mb or > 2.4 Mb
 
 ## Pangenome analysis
 
+We can now move on the the pangenome analysis exercise. For this exercise, we will be using the [Navajo population](https://www-ncbi-nlm-nih-gov.ezp-prod1.hul.harvard.edu/bioproject/PRJEB8327) as an example for this exercise. Running these analysis on a linux cluster is recommended, since some architectures are not compatible with the packages.
+
+The first step is to navigate to the exercise subfolder:
+
+```bash
+cd ~/exercises/pangenome_analysis
+```
 ### Annotate assemblies with [Prokka](https://github.com/tseemann/prokka)
+
+Now, we create and activate the conda environment containing prokka:
+
+```bash
+conda env create --file envs/prokka.yml
+conda activate prokka
+```
+Now we run a bash script that loops through every individual assembly file in a folder and runs prokka:
+
+```bash
+# Assign input arguments to variables
+ASSEMBLIES_DIR="~/exercises/pangenome_analysis/prokka_roary/assemblies"
+OUTPUT_DIR="~/exercises/pangenome_analysis/prokka_roary/annotations"
+
+# Create output directory if it does not exist
+mkdir -p $OUTPUT_DIR
+
+# Loop through each assembly file in the assemblies directory
+for ASSEMBLY in ${ASSEMBLIES_DIR}/*.fasta; do
+  # Get the base name of the file (without path and extension)
+  BASENAME=$(basename ${ASSEMBLY} .fasta)
+
+  # Run Prokka
+  prokka --outdir ${OUTPUT_DIR}/${BASENAME} --prefix ${BASENAME} ${ASSEMBLY}
+done
+```
+
+This creates an annotation file (.gff) per sample in the 'annotations' folder.
 
 ### Get pangenome gene definitions with [Roary](https://github.com/sanger-pathogens/Roary)
 
