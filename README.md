@@ -76,7 +76,9 @@ Now you can assess the read quality accross all samples.
 
 ### Assembly with [Unicycler](https://github.com/rrwick/Unicycler?tab=readme-ov-file#quick-usage)
 
-Assemblies are one of the most computationally intensive steps in the pipeline. Thus, they are usually run in high performance computing clusters. From the folder containing the clean reads you can run Unicycler:
+Assemblies are one of the most computationally intensive steps in the pipeline. Thus, they are usually run in high performance computing clusters. 
+
+From the folder containing the clean reads you can run Unicycler:
 
 ```bash
 unicycler -1 ERR065307_R1_trimmed.fastq.gz -2 ERR065307_R2_trimmed.fastq.gz -o ~/exercises/data_preprocessing/assemblies/ERR065307_assembly
@@ -84,6 +86,17 @@ unicycler -1 ERR065307_R1_trimmed.fastq.gz -2 ERR065307_R2_trimmed.fastq.gz -o ~
 Unicycler generates many output files, and there will be one folder per sample. The resulting assembly will be named assembly.fasta
 
 ### Assembly quality control with [Quast](https://github.com/ablab/quast)
+
+Now the assembly quality can be assessed using Quast:
+
+```bash
+quast -o ~/exercises/data_preprocessing/quast_qc/ERR065307_quast --threads 4 ~/exercises/data_preprocessing/assemblies/ERR065307_assembly/assembly.fasta
+```
+The generated folder contains a breakdown of various assembly quality metrics for your sample. This can be used to exclude assemblies based on quality. The exclusion criteria we use in our workflow are:
+
+i) An N50 less than 15 kb; or
+ii) ≥500 contigs, indicating the genome was too segmented; or 
+iii) A genome length <1.9 Mb or > 2.4 Mb
 
 ## Pangenome analysis
 
