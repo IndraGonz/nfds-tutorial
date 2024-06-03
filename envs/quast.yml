@@ -1,0 +1,47 @@
+name: quast
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - blast=2.6.0=boost1.64_2
+  - ca-certificates=2024.6.2=h8857fd0_0
+  - certifi=2019.11.28=py27_0
+  - cycler=0.10.0=py27_0
+  - freetype=2.6.3=1
+  - functools32=3.2.3.2=py27_2
+  - glimmerhmm=3.0.4=pl526h0a44026_3
+  - joblib=0.11=py27_0
+  - libblas=3.9.0=22_osx64_openblas
+  - libcblas=3.9.0=22_osx64_openblas
+  - libcxx=17.0.6=h88467a6_0
+  - libffi=3.2.1=hb1e8313_1007
+  - libgfortran=5.0.0=13_2_0_h97931a8_3
+  - libgfortran5=13.2.0=h2873a65_3
+  - liblapack=3.9.0=22_osx64_openblas
+  - libopenblas=0.3.27=openmp_hfef2a42_0
+  - libpng=1.6.43=h92b6c6a_0
+  - libsqlite=3.45.3=h92b6c6a_0
+  - libzlib=1.2.13=h87427d6_6
+  - llvm-openmp=18.1.6=h15ab845_0
+  - matplotlib=1.5.3=np111py27_0
+  - ncurses=6.5=h5846eda_0
+  - numpy=1.11.3=py27hdf140aa_1207
+  - openjdk=22.0.1=h2d185b6_0
+  - openssl=1.1.1w=h8a1eda9_0
+  - perl=5.26.2=hbcb3906_1008
+  - pip=20.0.2=py27_1
+  - pyparsing=2.2.0=py27_0
+  - python=2.7.15=h8e446fc_1010_cpython
+  - python-dateutil=2.6.1=py27_0
+  - pytz=2017.3=py27_3
+  - quast=5.0.0=py27pl526ha92aebf_0
+  - readline=8.2=h9e318b2_1
+  - setuptools=44.0.0=py27_0
+  - simplejson=3.17.0=py27h0b31af3_0
+  - six=1.14.0=py27_0
+  - sqlite=3.45.3=h7461747_0
+  - tk=8.6.13=h1abcd95_1
+  - wheel=0.34.2=py27_0
+  - zlib=1.2.13=h87427d6_6
+prefix: /Users/indragonzalez/miniconda3/envs/quast
