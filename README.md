@@ -177,12 +177,33 @@ conda env create --file envs/clarc_env.yml
 conda activate clarc_env
 
 # Run CLARC
-clarc --input_dir ~/exercises/pangenome_analysis/clarc/data --output_dir ~/exercises/pangenome_analysis/clarc/clarc_results
+clarc --input_dir ~/exercises/pangenome_analysis/clarc/data --output_dir ~/exercises/pangenome_analysis/clarc/clarc_output
 ```
 
 ## Strain typing 
 
 ### Strain typing using [PopPUNK](https://github.com/bacpop/PopPUNK)
+
+To be consistent with worlwide efforts to study pneumococcus, we type each sample for its global pneumococcal sequence cluster (GPSC). This is a PopPUNK typing developed by the [global pneumococcal sequencing project (GPS)] (https://www.pneumogen.net/gps/). 
+
+To do this, we input an external clustering file into PopPUNK, which contains information from all the samples in the GPS database. This is done by following the [instructions for GPSC typing](https://www.pneumogen.net/gps/#/training#command-line) outlined by GPS.
+
+**NOTE:** The version of PopPUNK supported by the GPS is not compatible with the Mac M1 architecture. Linux is recommended.
+
+All that is needed is included within this repository, including the external files and a conda environment for PopPUNK. Besides that, PopPUNK needs a text file containing the name and path of every sample to be included in the analysis (called a qfile). 
+
+With this we can proceed to run PopPUNK for the Navajo samples:
+
+```bash
+# Activate poppunk environment
+conda env create --file envs/poppunk_env.yml
+conda activate poppunk_env
+
+# Run PopPUNK
+poppunk_assign --db ~/GPS_v8_ref --external-clustering ~/GPS_v8_external_clusters.csv --query ~/exercises/poppunk/navajo/navajo_qfile.txt --output ~/exercises/poppunk/navajo/poppunk_typing
+```
+
+The general GPSC assignments will be located in the 'poppunk_typing_external_clusters.csv' output file.
 
 ## Quadratic programming model 
 
