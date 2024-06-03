@@ -13,7 +13,7 @@ Simple tutorial of technical workflow to study negative frequency dependent sele
 
 This tutorial relies heavily on conda environments so a conda installation is assumed. For quick and simple instructions of how to locally install conda with miniconda follow [this link](https://docs.anaconda.com/free/miniconda/#quick-command-line-install).
 
-For the steps in which the same command is generally run for multiple files (cleaning, annotations, assemblies, etc.) I use bash scripts to perform the step in batch, which is more useful and closer to how we run these analyses. They are especially helpful if you want to submit jobs on a computing cluster. These scripts are found in the [scripts](/scripts) folder within this repository.
+I will focus on For the steps in which the same command is generally run for multiple files (cleaning, annotations, assemblies, etc.) I use bash scripts to perform the step in batch, which is more useful and closer to how we run these analyses. They are especially helpful if you want to submit jobs on a computing cluster. These scripts are found in the [scripts](/scripts) folder within this repository.
 
 ## Data pre-processing
 
@@ -35,11 +35,29 @@ then activate the environment:
 conda activate qc_assembly
 ```
 
-Now you should be able to run the data pre-processing steps. 
+Now you should be able to run the data pre-processing steps. For these examples we will be using sample ERR065307 as a case study.
 
 ### Read cleaning with [Trimmomatic](https://github.com/timflutre/trimmomatic)
 
+First we navigate to the folder that contains the example raw reads:
+
+```bash
+cd  ~/exercises/data_preprocessing/reads
+```
+Now, we can run the trimmomatic command:
+
+```bash
+trimmomatic PE -phred33 \
+ERR065307_1.fastq.gz ERR065307_2.fastq.gz \
+~/exercises/data_preprocessing/trimmed_reads/ERR065307_R1_trimmed.fastq.gz /dev/null \
+~exercises/data_preprocessing/trimmed_reads/ERR065307_R2_trimmed.fastq.gz /dev/null \
+SLIDINGWINDOW:4:20 MINLEN:30 ILLUMINACLIP:NexteraPE-PE.fa:2:30:10
+```
+The clean reads will be found in the 'trimmed_reads' folder and we can proceed to QC the new read files.
+
 ### Read quality control with [FastQC](https://github.com/s-andrews/FastQC)
+
+
 
 ### Assembly with [Unicycler](https://github.com/rrwick/Unicycler?tab=readme-ov-file#quick-usage)
 
