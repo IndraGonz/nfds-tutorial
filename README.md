@@ -148,7 +148,37 @@ This creates an annotation file (.gff) per sample in the 'annotations' folder.
 
 ### Get pangenome gene definitions with [Roary](https://github.com/sanger-pathogens/Roary)
 
+As we are accustomed to, we create and activate the Roary environment:
+
+```bash
+conda env create --file envs/roary_env.yml
+conda activate roary_env
+```
+Afterwards, with the folder containing all annotation files, we can proceed to run Roary:
+
+```bash
+roary -o {1} -i 90 -e -n -z -v *.gff
+```
+Roary assumes you are located in the folder that contains all the .gff files.
+
+Here Roary is run on the default parameters, except for the identity threshold which is set at 90% (instead of 98%). Intermediate files are kept, but you can decide the parameters that work best for your specific purpose.
+
 ### Clean Roary gene definitions with CLARC (obtain final presence absence matrix for accessory genes)
+
+CLARC uses two output files from Roary: The 'gene_presence_absence.csv' which contains a presence absence matrix with all the COGs identified by Roary and 'pan_genome_reference.fa' which is a fasta file containing the representative sequences of these genes. The representative sequence is the longest instance of that COG across the samples.
+
+Additionally, CLARC needs a text file with the names of the samples in your population of interest. The linkage constraints will be calculated based on this population. This can be all location from a particular geographic location, for example. This file should be named 'needed_sample_names.txt'.
+
+These three inputs should be put in a subfolder within the subfolder CLARC will be run from. Afterwards, clarc can be run from the terminal after creating and activating it's environment:
+
+```bash
+# Activate clarc environment
+conda env create --file envs/clarc_env.yml
+conda activate clarc_env
+
+# Run CLARC
+clarc --input_dir ~/exercises/pangenome_analysis/clarc/data --output_dir ~/exercises/pangenome_analysis/clarc/clarc_results
+```
 
 ## Strain typing 
 
