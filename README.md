@@ -11,11 +11,31 @@ Simple tutorial of technical workflow to study negative frequency dependent sele
 
 ## Introduction
 
+This tutorial relies heavily on conda environments so a conda installation is assumed. For quick and simple instructions of how to locally install conda with miniconda follow [this link](https://docs.anaconda.com/free/miniconda/#quick-command-line-install).
+
+For the steps in which the same command is generally run for multiple files (cleaning, annotations, assemblies, etc.) I use bash scripts to perform the step in batch, which is more useful and closer to how we run these analyses. They are especially helpful if you want to submit jobs on a computing cluster. These scripts are found in the [scripts](/scripts) folder within this repository.
+
 ## Data pre-processing
 
 In this step we will go from raw reads to assemblies, doing appropiate quality control for each step. 
 
-### Setting up environment
+### Setting up main environment
+
+Due to incompatibilities, two environments are used for this step: qc_assembly.yml and quast.yml. The qc_assembly environment is used for all cleaning and assembly steps, while quast is only used for the last step of assembly qc. Both of these files are located in the [envs](/envs) folder within this repository.
+
+To create the conda environments for the read cleaning and assembly steps:
+
+```bash
+conda env create --file envs/qc_assembly.yml
+```
+
+then activate the environment:
+
+```bash
+conda activate qc_assembly
+```
+
+Now you should be able to run the data pre-processing steps. 
 
 ### Read cleaning with [Trimmomatic](https://github.com/timflutre/trimmomatic)
 
