@@ -57,9 +57,31 @@ The clean reads will be found in the 'trimmed_reads' folder and we can proceed t
 
 ### Read quality control with [FastQC](https://github.com/s-andrews/FastQC)
 
+Similarly, we navigate to the directory that contains the clean reads:
 
+```bash
+cd  ~/exercises/data_preprocessing/trimmed_reads
+```
+Now, we can run the FastQC command:
+
+```bash
+fastqc -o ~/exercises/data_preprocessing/fast_qc ERR065307_R1_trimmed.fastq.gz ERR065307_R2_trimmed.fastq.gz
+```
+And to summarize all FastQC reports into one, we run MultiQC:
+
+```bash
+multiqc ~/exercises/data_preprocessing/fast_qc
+```
+Now you can assess the read quality accross all samples.
 
 ### Assembly with [Unicycler](https://github.com/rrwick/Unicycler?tab=readme-ov-file#quick-usage)
+
+Assemblies are one of the most computationally intensive steps in the pipeline. Thus, they are usually run in high performance computing clusters. From the folder containing the clean reads you can run Unicycler:
+
+```bash
+unicycler -1 ERR065307_R1_trimmed.fastq.gz -2 ERR065307_R2_trimmed.fastq.gz -o ~/exercises/data_preprocessing/assemblies/ERR065307_assembly
+```
+Unicycler generates many output files, and there will be one folder per sample. The resulting assembly will be named assembly.fasta
 
 ### Assembly quality control with [Quast](https://github.com/ablab/quast)
 
