@@ -89,10 +89,19 @@ Unicycler generates many output files, and there will be one folder per sample. 
 
 Now the assembly quality can be assessed using Quast:
 
+Due to package conflicts, quast is run from a separate conda environment. To create and use the quast environment:
+
+```bash
+conda deactivate # If there is another active environment
+conda env create --file envs/quast.yml
+conda activate quast
+```
+Afterwards, quast can be run:
+
 ```bash
 quast -o ~/exercises/data_preprocessing/quast_qc/ERR065307_quast --threads 4 ~/exercises/data_preprocessing/assemblies/ERR065307_assembly/assembly.fasta
 ```
-The generated folder contains a breakdown of various assembly quality metrics for your sample. This can be used to exclude assemblies based on quality. The exclusion criteria we use in our workflow are:
+The 'report.tsv' file in the generated folder contains a breakdown of various assembly quality metrics for your sample. This can be used to exclude assemblies based on quality. The exclusion criteria we use in our workflow are:
 
 i) An N50 less than 15 kb; or
 ii) ≥500 contigs, indicating the genome was too segmented; or 
