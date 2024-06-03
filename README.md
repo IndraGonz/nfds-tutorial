@@ -209,6 +209,17 @@ The general GPSC assignments will be located in the 'poppunk_typing_external_clu
 
 ### Predicting post-vaccine population structure with quadratic programming (QP) model
 
+The quadratic programming model is run from a Jupyter Notebook. Instructions on how to install jupyter-lab can be found [here](https://jupyter.org/install).
+
+After installing launch jupyter lab:
+
+```bash
+jupyter-lab
+```
+Then proceed to open the file found in [this repository](/exercises/qp_prediction/navajo_qp-prediction.ipynb) named 'navajo_qp-prediction.ipynb'
+
 ## Conclusion
+
+This is a bare bones overview of the workflow used to study negative frequency dependent selection in S. pneumoniae. This repository is still being updated to make it more comprehensive.
 
 
