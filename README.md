@@ -317,21 +317,55 @@ poppunk_assign --db ~/nfds-tutorial/exercises/poppunk/databases/GPS_v8_ref --ext
 
 The general GPSC assignments will be located in the 'poppunk_typing_external_clusters.csv' output file in the `/nfds-tutorial/exercises/poppunk/data` folder.
 
-## Quadratic programming model 
+## Quadratic programming (QP) model 
 
 ### Predicting post-vaccine population structure with quadratic programming (QP) model
 
+We've done it! We have gotten to the last step of the NFDS pipeline: Predicting post-vaccine population structure using pre-vaccine gene frequencies.
+
+#### Preparing the data
+
+In this example, we will be using the Southwest US (Navajo) dataset again. In this dataset, there was sampling before and after vaccination. This allows us to divide the samples by year of collection and we can calculate the gene and strain frequencies before and after vaccination.
+
+But before we do that, let's download the data we will need for this part! What we will be using is the presence absence matrix that is output from CLARC (`clarc_condensed_presence_absence.csv`) and a metadata file that contains the PopPUNK GPSC results along with some other information about the samples, including time of collection (`MMN-meta-clean.xlsx`). Both of these files can be found in this [google drive folder](https://drive.google.com/drive/folders/1KSEkmj6v0Wmz4aJlz1_gs8vvf9MHygUq?usp=drive_link). This is the last google drive folder, I promise.
+
+Download the files into the `nfds-tutorial/exercises/qp_prediction/data` folder within this repository. And now you are ready to get jupyter set up.
+
+**Note:** I provided the 'CLARC presence absence' output here for ease, but if you ran the CLARC step in this tutorial you should have generated this exact same file. You can use this file instead of downloading it, which should be in this path: `nfds-tutorial/exercises/pangenome_analysis/clarc/clarc_output/clarc_results/clarc_condensed_presence_absence.csv`. 
+
+#### Setting up the jupyter notebook
+
 The quadratic programming model is run from a Jupyter Notebook. Instructions on how to install jupyter-lab can be found [here](https://jupyter.org/install).
 
-After installing launch jupyter lab:
+Additionally, the QP solver itself is run through an R integration, so I've created an environment that includes the dependencies needed to run this integration. You can install it from the envs folder as per ush:
+
+```bash
+# Create r to python environment
+conda env create --file rpy-env.yml
+```
+
+Then we activate:
+
+```bash
+# Activate r to python environment
+conda activate rpy-env
+```
+
+** Within the rpy environment**, launch jupyter lab:
 
 ```bash
 jupyter-lab
 ```
-Then proceed to open the file found in [this repository](/exercises/qp_prediction/navajo_qp-prediction.ipynb) named 'navajo_qp-prediction.ipynb'
+Now with the jupyter lab interface you can navigate to the `/exercises/qp_prediction` folder in this repository and open the file named `navajo_qp-prediction.ipynb`
+
+#### Running the prediction within the jupyter notebook
+
+Now you can navigate through the Jupyter notebook where you can run each step individually in subsequent cells. At the end there should be a plot where the predicted strain frequencies after vaccination are compared to the frequencies that were _actually_ observed after vaccination.
 
 ## Conclusion
 
-This is a bare bones overview of the workflow used to study negative frequency dependent selection in S. pneumoniae. This repository is still being updated to make it more comprehensive.
+This is a bare bones overview of the workflow used to study negative frequency dependent selection in _S. pneumoniae_. I hope you enjoyed running this as much as I enjoyed making it! :)
+
+I would love to hear any problems, thoughs, suggestions, hopes, dreams, etc. Feel free to contact me with any of that at igonzalezojeda@g.harvard.edu
 
 
