@@ -30,13 +30,15 @@ In this step we will go from raw reads to assemblies, doing appropiate quality c
 
 Due to incompatibilities, two environments are used for this step: qc_assembly.yml and quast.yml. The qc_assembly environment is used for all cleaning and assembly steps, while quast is only used for the last step of assembly qc. Both of these files are located in the [envs](/envs) folder within this repository.
 
-**Note:** We will be creating a lot of different environments for this tutorial. For this the conda create command must be run from the envs folder which contains all the precious .yml files. So the unspoken pre-command for all the 'conda create...' commands in this tutorial is:
+**Note:** We will be creating a lot of different environments for this tutorial. Like A LOT of environments so, bear with me. It's one way I've found to minimize things conflicting and crashing.
+
+Anyways, to create the environments we use the conda create command, which must be run from the envs folder that contains all the precious .yml files. So, the unspoken pre-command for all the 'conda create...' commands in this tutorial is:
 
 ```bash
 cd ~/nfds-tutorial/envs
 ```
 
-To create the conda environments for the read cleaning and assembly steps:
+To create the conda environments for the read cleaning step:
 
 ```bash
 conda env create --file qc_assembly.yml
@@ -89,14 +91,25 @@ Now you can assess the read quality accross all samples.
 
 ### Assembly with [Unicycler](https://github.com/rrwick/Unicycler?tab=readme-ov-file#quick-usage)
 
-Assemblies are one of the most computationally intensive steps in the pipeline. Thus, they are usually run in high performance computing clusters. 
+Assemblies are one of the most computationally intensive steps in the pipeline. Thus, they are usually run in high performance computing clusters. It generally requires a fair bit of memory, and the program will fail if it runs out of memory. Thus, I recommend submitting this command as a job in your favorite high performance computer cluster. In the [scripts](/scripts) folder I have included a bash script named 'run_unicycler_nfds_example.sh' that runs unicycler for the one sample we are using as an example. This script is formatted specifically for the [FasRC](https://www.rc.fas.harvard.edu/) cluster at Harvard University, so make sure to update the format/paths/etc. It is just meant to serve as an example.
 
-From the folder containing the clean reads you can run Unicycler:
+The bash script mentioned above allocated 36 GB of memory across 16 cores. This might be overkill for a single sample, but it did run. Of course if you are running multiple samples make sure to allocate memory appropiately. 
+
+You can also just run it from the command line directly, if you've allocated enough memory. Below is an example of how to do that.
+
+Unicycler is a bit sensitive to package versions, so we create and activate a different environment from the 'unicycler.yml' file:
+
+```bash
+conda env create --file unicycler.yml
+conda activate unicycler
+```
+
+Now, from the folder containing the trimmed reads you can run Unicycler:
 
 ```bash
 unicycler -1 ERR065307_R1_trimmed.fastq.gz -2 ERR065307_R2_trimmed.fastq.gz -o ~/nfds-tutorial/exercises/data_preprocessing/assemblies/ERR065307_assembly
 ```
-Unicycler generates many output files, and there will be one folder per sample. The resulting assembly will be named assembly.fasta
+Unicycler generates many output files, and there will be one folder per sample. The resulting assembly will be named 'assembly.fasta'
 
 ### Assembly quality control with [Quast](https://github.com/ablab/quast)
 
