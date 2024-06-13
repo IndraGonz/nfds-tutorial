@@ -144,7 +144,7 @@ iii) A genome length <1.9 Mb or > 2.4 Mb
 
 ## Pangenome analysis
 
-We can now move on the the pangenome analysis exercise. For this exercise, we will be using 3 samples in the [Navajo population](https://www-ncbi-nlm-nih-gov.ezp-prod1.hul.harvard.edu/bioproject/PRJEB8327) as an example for the first couple of steps in this exercise. Running these analyses on a linux cluster is recommended, since some architectures are not compatible with the packages.
+We can now move on the the pangenome analysis exercise. By definition, pangenome analyses require more than one sample. Thus, for this part of the exercise we will be using 3 samples in the [Navajo population](https://www-ncbi-nlm-nih-gov.ezp-prod1.hul.harvard.edu/bioproject/PRJEB8327) as an example for the first couple of steps in this exercise. Running these analyses on a linux cluster is recommended, since some architectures are not compatible with the packages.
 
 First download the 3 fasta files we will use from this [google drive folder](https://drive.google.com/drive/folders/1969ZeuSHZK8Xfx1wmXalc4ttI_JEMC44?usp=sharing). 
 
@@ -160,15 +160,15 @@ cd ~/nfds-tutorial/exercises/pangenome_analysis
 Now, we create and activate the conda environment containing prokka:
 
 ```bash
-conda env create --file prokka.yml
-conda activate prokka
+conda env create --file prokka_env.yml
+conda activate prokka_env
 ```
 Now we run a bash script that loops through every individual assembly file in a folder and runs prokka:
 
 ```bash
 # Assign input arguments to variables
 ASSEMBLIES_DIR="~/nfds-tutorial/exercises/pangenome_analysis/prokka_roary/assemblies"
-OUTPUT_DIR="~/nfds-tutorial/exercises/pangenome_analysis/prokka_roary/annotations"
+OUTPUT_DIR="~/nfds-tutorial/exercises/pangenome_analysis/annotations"
 
 # Create output directory if it does not exist
 mkdir -p $OUTPUT_DIR
@@ -182,8 +182,9 @@ for ASSEMBLY in ${ASSEMBLIES_DIR}/*.fasta; do
   prokka --outdir ${OUTPUT_DIR}/${BASENAME} --prefix ${BASENAME} ${ASSEMBLY}
 done
 ```
+Prokka will create a folder per sample in the `annotations` folder. The annotation files will the the ones named `{sample_name}.gff` within each subfolder. 
 
-This creates an annotation file (.gff) per sample in the 'annotations' folder.
+This step can also take a bit of time (few minutes per sample), so you can also create a bash script and submit as a job to a high computing cluster, as we had previously discussed. 
 
 ### Get pangenome gene definitions with [Roary](https://github.com/sanger-pathogens/Roary)
 
@@ -193,28 +194,55 @@ As we are accustomed to, we create and activate the Roary environment:
 conda env create --file roary_env.yml
 conda activate roary_env
 ```
-Afterwards, with the folder containing all annotation files, we can proceed to run Roary:
+Now, let's copy our three .gff files into the `nfds-tutorial/exercises/pangenome_analysis/roary` folder:
+
+```bash
+find ~/nfds-tutorial/exercises/pangenome_analysis/annotations -type f -name "*.gff" -exec cp {} ~/nfds-tutorial/exercises/pangenome_analysis/roary \;
+```
+
+This command goes into each prokka subfolder, finds the .gff files and then copies them into the roary folder.
+
+Afterwards, in the designated folder containing all annotation files, we can proceed to run Roary:
 
 ```bash
 roary -o {1} -i 90 -e -n -z -v *.gff
 ```
+
 Roary assumes you are located in the folder that contains all the .gff files.
 
-Here Roary is run on the default parameters, except for the identity threshold which is set at 90% (instead of 98%). Intermediate files are kept, but you can decide the parameters that work best for your specific purpose.
+Here Roary is run on the default parameters, except for the identity threshold which is set at 90% (instead of 98%). Intermediate files are kept, but you can decide the parameters that work best for your specific purpose. For more information on Roary's parameters and output files I highly recommend readind [Roary's documentation](https://sanger-pathogens.github.io/Roary/) which is very thorough. 
 
-### Clean Roary gene definitions with CLARC (obtain final presence absence matrix for accessory genes)
+### Clean Roary gene definitions with [CLARC](https://github.com/IndraGonz/CLARC) (obtain final presence absence matrix for accessory genes)
 
-CLARC uses two output files from Roary: The 'gene_presence_absence.csv' which contains a presence absence matrix with all the COGs identified by Roary and 'pan_genome_reference.fa' which is a fasta file containing the representative sequences of these genes. The representative sequence is the longest instance of that COG across the samples.
+CLARC is specifically meant to refine Clusters of Orthologous Genes (COG) assignmnents from a multi-population Roary run. So, our previous example Roary run is not compatible with the tool.
 
-Additionally, CLARC needs a text file with the names of the samples in your population of interest. The linkage constraints will be calculated based on this population. This can be all location from a particular geographic location, for example. This file should be named 'needed_sample_names.txt'.
+Thus, for the rest of this tutorial we will use the relevant Roary output files from a pangenome analysis run with >8000 _S. pneumoniae_ genomes encompassing more than 8 distinct carriage datasets. 
 
-These three inputs should be put in a subfolder within the subfolder CLARC will be run from. Afterwards, clarc can be run from the terminal after creating and activating it's environment:
+CLARC uses two output files from Roary: The 'gene_presence_absence.csv' which contains a presence absence matrix with all the COGs identified by Roary and 'pan_genome_reference.fa' which is a fasta file containing the representative sequences of these genes. The representative sequence is the longest instance of that COG across the samples. The .csv file can be big (>1 GB), as it contains ALL COG definitions and not only core/accessory.
+
+Additionally, CLARC needs a text file with the names of the samples in your population of interest. The linkage constraints will be calculated based on this population. This can be all location from a particular geographic location, for example. This file should be named 'needed_sample_names.txt'. In this example, we will be running CLARC to refine the COG definitions in the Navajo population (937 samples).
+
+You can download the CLARC input files from this [google drive folder](https://drive.google.com/drive/folders/1cfJtgLX9w2DGSb90K965lf_sxNn3k36f?usp=sharing).
+
+These three inputs should be put in the `/nfds-tutorial/exercises/pangenome_analysis/clarc/data` subfolder. 
+
+Now, we have gotten to the exciting part of installing CLARC! As it is in the beta testing stage, we first build the given CLARC environment to install all dependencies and then we install the tool by copying the CLARC repository directly from GitHub.
 
 ```bash
-# Activate clarc environment
-conda env create --file clarc_env.yml
-conda activate clarc_env
+# Create CLARC environment
 
+# Activate CLARC environment
+
+# Copy CLARC repository from GitHub
+
+# Install CLARC
+
+# Check that CLARC was successfully installed
+```
+
+Afterwards, clarc can be run from the terminal (within the environment):
+
+```bash
 # Run CLARC
 clarc --input_dir ~/nfds-tutorial/exercises/pangenome_analysis/clarc/data --output_dir ~/nfds-tutorial/exercises/pangenome_analysis/clarc/clarc_output
 ```
