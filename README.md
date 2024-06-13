@@ -72,8 +72,8 @@ Now, we can run the trimmomatic command:
 ```bash
 trimmomatic PE -phred33 \
 ERR065307_1.fastq.gz ERR065307_2.fastq.gz \
-~/exercises/data_preprocessing/trimmed_reads/ERR065307_R1_trimmed.fastq.gz /dev/null \
-~exercises/data_preprocessing/trimmed_reads/ERR065307_R2_trimmed.fastq.gz /dev/null \
+~/nfds-tutorial/exercises/data_preprocessing/trimmed_reads/ERR065307_R1_trimmed.fastq.gz /dev/null \
+~nfds-tutorial/exercises/data_preprocessing/trimmed_reads/ERR065307_R2_trimmed.fastq.gz /dev/null \
 SLIDINGWINDOW:4:20 MINLEN:30 ILLUMINACLIP:NexteraPE-PE.fa:2:30:10
 ```
 The clean reads will be found in the 'trimmed_reads' folder and we can proceed to QC the new read files.
