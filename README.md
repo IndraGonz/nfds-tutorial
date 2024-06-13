@@ -13,7 +13,7 @@ Simple tutorial of technical workflow to study negative frequency dependent sele
 
 This tutorial relies heavily on conda environments so a conda installation is assumed. For quick and simple instructions of how to locally install conda with miniconda follow [this link](https://docs.anaconda.com/free/miniconda/#quick-command-line-install).
 
-I will focus on the most simple execution of each command. However, for the steps in which the same command is generally run for multiple files (cleaning, annotations, assemblies, etc.) I use bash scripts to perform the step in batch, which is more useful and closer to how we run these analyses. They are especially helpful if you want to submit jobs on a computing cluster. These scripts are found in the [scripts](/scripts) folder within this repository.
+I will focus on the most simple execution of each command. However, for the steps in which the same command is generally run for multiple files (cleaning, annotations, assemblies, etc.). You can use bash scripts to perform these steps in batch, which is more useful and closer to how we run these analyses. They are especially helpful if you want to submit jobs on a computing cluster. Some examples of bash scripts are found in the [scripts](/scripts) folder within this repository.
 
 If you wish to run these exercises locally (or from a cluster), you can copy the repository:
 
