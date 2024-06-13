@@ -1,0 +1,3 @@
+ERR906959_G5_15C_2010	nfds-tutorial/exercises/pangenome_analysis/assemblies/ERR906959_G5_15C_2010.fasta
+ERR906960_G5_6A_2010	nfds-tutorial/exercises/pangenome_analysis/assemblies/ERR906960_G5_6A_2010.fasta
+ERR906961_G5_22A_2010	nfds-tutorial/exercises/pangenome_analysis/assemblies/ERR906961_G5_22A_2010.fasta

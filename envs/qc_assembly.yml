@@ -1,0 +1,10 @@
+name: qc_assembly
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - trimmomatic
+  - unicycler
+  - quast
+  - fastqc
+  - multiqc
