@@ -20,7 +20,7 @@ If you wish to run these exercises locally (or from a cluster), you can copy the
 ```bash
 git clone https://github.com/IndraGonz/nfds-tutorial.git
 ```
-This tutorial is structured to be run from the repository, 
+This tutorial is structured to be run from the repository, but of course I'm not the boss of you and you can rebel by running these exercises however you want.  
 
 ## Data pre-processing
 
@@ -30,7 +30,7 @@ In this step we will go from raw reads to assemblies, doing appropiate quality c
 
 Due to incompatibilities, two environments are used for this step: qc_assembly.yml and quast.yml. The qc_assembly environment is used for all cleaning and assembly steps, while quast is only used for the last step of assembly qc. Both of these files are located in the [envs](/envs) folder within this repository.
 
-**Note:** We will be creating a lot of different environments for this tutorial. For this the conda create command must be run from the envs folder which contains the .yml files. So the unspoken pre-command for all the 'conda create' commands in this tutorial is:
+**Note:** We will be creating a lot of different environments for this tutorial. For this the conda create command must be run from the envs folder which contains all the precious .yml files. So the unspoken pre-command for all the 'conda create...' commands in this tutorial is:
 
 ```bash
 cd ~/nfds-tutorial/envs
@@ -48,14 +48,14 @@ then activate the environment:
 conda activate qc_assembly
 ```
 
-Now you should be able to run the data pre-processing steps. For these examples we will be using sample ERR065307 as a case study.
+Now you should be able to run the data pre-processing steps. For these examples we will be using sample [ERR065307](https://www.ncbi.nlm.nih.gov/sra/ERR065307) as a case study.
 
 ### Read cleaning with [Trimmomatic](https://github.com/timflutre/trimmomatic)
 
 First we navigate to the folder that contains the example raw reads:
 
 ```bash
-cd  ~/exercises/data_preprocessing/reads
+cd  ~/nfds-tutorial/exercises/data_preprocessing/reads
 ```
 Now, we can run the trimmomatic command:
 
@@ -73,17 +73,17 @@ The clean reads will be found in the 'trimmed_reads' folder and we can proceed t
 Similarly, we navigate to the directory that contains the clean reads:
 
 ```bash
-cd  ~/exercises/data_preprocessing/trimmed_reads
+cd  ~/nfds-tutorial/exercises/data_preprocessing/trimmed_reads
 ```
 Now, we can run the FastQC command:
 
 ```bash
-fastqc -o ~/exercises/data_preprocessing/fast_qc ERR065307_R1_trimmed.fastq.gz ERR065307_R2_trimmed.fastq.gz
+fastqc -o ~/nfds-tutorial/exercises/data_preprocessing/fast_qc ERR065307_R1_trimmed.fastq.gz ERR065307_R2_trimmed.fastq.gz
 ```
 And to summarize all FastQC reports into one, we run MultiQC:
 
 ```bash
-multiqc ~/exercises/data_preprocessing/fast_qc
+multiqc ~/nfds-tutorial/exercises/data_preprocessing/fast_qc
 ```
 Now you can assess the read quality accross all samples.
 
@@ -94,7 +94,7 @@ Assemblies are one of the most computationally intensive steps in the pipeline. 
 From the folder containing the clean reads you can run Unicycler:
 
 ```bash
-unicycler -1 ERR065307_R1_trimmed.fastq.gz -2 ERR065307_R2_trimmed.fastq.gz -o ~/exercises/data_preprocessing/assemblies/ERR065307_assembly
+unicycler -1 ERR065307_R1_trimmed.fastq.gz -2 ERR065307_R2_trimmed.fastq.gz -o ~/nfds-tutorial/exercises/data_preprocessing/assemblies/ERR065307_assembly
 ```
 Unicycler generates many output files, and there will be one folder per sample. The resulting assembly will be named assembly.fasta
 
@@ -106,13 +106,13 @@ Due to package conflicts, quast is run from a separate conda environment. To cre
 
 ```bash
 conda deactivate # If there is another active environment
-conda env create --file envs/quast.yml
+conda env create --file quast.yml
 conda activate quast
 ```
 Afterwards, quast can be run:
 
 ```bash
-quast -o ~/exercises/data_preprocessing/quast_qc/ERR065307_quast --threads 4 ~/exercises/data_preprocessing/assemblies/ERR065307_assembly/assembly.fasta
+quast -o ~/nfds-tutorial/exercises/data_preprocessing/quast_qc/ERR065307_quast --threads 4 ~/nfds-tutorial/exercises/data_preprocessing/assemblies/ERR065307_assembly/assembly.fasta
 ```
 The 'report.tsv' file in the generated folder contains a breakdown of various assembly quality metrics for your sample. This can be used to exclude assemblies based on quality. The exclusion criteria we use in our workflow are:
 
@@ -127,22 +127,22 @@ We can now move on the the pangenome analysis exercise. For this exercise, we wi
 The first step is to navigate to the exercise subfolder:
 
 ```bash
-cd ~/exercises/pangenome_analysis
+cd ~/nfds-tutorial/exercises/pangenome_analysis
 ```
 ### Annotate assemblies with [Prokka](https://github.com/tseemann/prokka)
 
 Now, we create and activate the conda environment containing prokka:
 
 ```bash
-conda env create --file envs/prokka.yml
+conda env create --file prokka.yml
 conda activate prokka
 ```
 Now we run a bash script that loops through every individual assembly file in a folder and runs prokka:
 
 ```bash
 # Assign input arguments to variables
-ASSEMBLIES_DIR="~/exercises/pangenome_analysis/prokka_roary/assemblies"
-OUTPUT_DIR="~/exercises/pangenome_analysis/prokka_roary/annotations"
+ASSEMBLIES_DIR="~/nfds-tutorial/exercises/pangenome_analysis/prokka_roary/assemblies"
+OUTPUT_DIR="~/nfds-tutorial/exercises/pangenome_analysis/prokka_roary/annotations"
 
 # Create output directory if it does not exist
 mkdir -p $OUTPUT_DIR
@@ -164,7 +164,7 @@ This creates an annotation file (.gff) per sample in the 'annotations' folder.
 As we are accustomed to, we create and activate the Roary environment:
 
 ```bash
-conda env create --file envs/roary_env.yml
+conda env create --file roary_env.yml
 conda activate roary_env
 ```
 Afterwards, with the folder containing all annotation files, we can proceed to run Roary:
@@ -186,11 +186,11 @@ These three inputs should be put in a subfolder within the subfolder CLARC will 
 
 ```bash
 # Activate clarc environment
-conda env create --file envs/clarc_env.yml
+conda env create --file clarc_env.yml
 conda activate clarc_env
 
 # Run CLARC
-clarc --input_dir ~/exercises/pangenome_analysis/clarc/data --output_dir ~/exercises/pangenome_analysis/clarc/clarc_output
+clarc --input_dir ~/nfds-tutorial/exercises/pangenome_analysis/clarc/data --output_dir ~/nfds-tutorial/exercises/pangenome_analysis/clarc/clarc_output
 ```
 
 ## Strain typing 
@@ -209,11 +209,11 @@ With this we can proceed to run PopPUNK for the Navajo samples:
 
 ```bash
 # Activate poppunk environment
-conda env create --file envs/poppunk_env.yml
+conda env create --file poppunk_env.yml
 conda activate poppunk_env
 
 # Run PopPUNK
-poppunk_assign --db ~/GPS_v8_ref --external-clustering ~/GPS_v8_external_clusters.csv --query ~/exercises/poppunk/navajo/navajo_qfile.txt --output ~/exercises/poppunk/navajo/poppunk_typing
+poppunk_assign --db ~/GPS_v8_ref --external-clustering ~/GPS_v8_external_clusters.csv --query ~/nfds-tutorial/exercises/poppunk/navajo/navajo_qfile.txt --output ~/nfds-tutorial/exercises/poppunk/navajo/poppunk_typing
 ```
 
 The general GPSC assignments will be located in the 'poppunk_typing_external_clusters.csv' output file.
