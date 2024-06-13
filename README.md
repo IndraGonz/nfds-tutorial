@@ -220,15 +220,7 @@ Here Roary is run on the default parameters, except for the identity threshold w
 
 CLARC is specifically meant to refine Clusters of Orthologous Genes (COG) assignmnents from a multi-population Roary run. So, our previous example Roary run is not compatible with the tool.
 
-Thus, for the rest of this tutorial we will use the relevant Roary output files from a pangenome analysis run with >8000 _S. pneumoniae_ genomes encompassing more than 8 distinct carriage datasets. 
-
-CLARC uses two output files from Roary: The 'gene_presence_absence.csv' which contains a presence absence matrix with all the COGs identified by Roary and 'pan_genome_reference.fa' which is a fasta file containing the representative sequences of these genes. The representative sequence is the longest instance of that COG across the samples. The .csv file can be big (>1 GB), as it contains ALL COG definitions and not only core/accessory.
-
-Additionally, CLARC needs a text file with the names of the samples in your population of interest. The linkage constraints will be calculated based on this population. This can be all location from a particular geographic location, for example. This file should be named 'needed_sample_names.txt'. In this example, we will be running CLARC to refine the COG definitions in the Navajo population (937 samples).
-
-You can download the CLARC input files from this [google drive folder](https://drive.google.com/drive/folders/1cfJtgLX9w2DGSb90K965lf_sxNn3k36f?usp=sharing).
-
-These three inputs should be put in the `/nfds-tutorial/exercises/pangenome_analysis/clarc/data` subfolder. 
+Thus, for the rest of this tutorial we will use the relevant Roary output files from a pangenome analysis run with >8000 _S. pneumoniae_ genomes encompassing more than 8 distinct carriage datasets. First step is installation.
 
 #### Installing CLARC
 
@@ -270,6 +262,14 @@ clarc --version
 If it shows the version then it has been installed correctly!
 
 #### Running CLARC
+
+CLARC uses two output files from Roary: The 'gene_presence_absence.csv' which contains a presence absence matrix with all the COGs identified by Roary and 'pan_genome_reference.fa' which is a fasta file containing the representative sequences of these genes. The representative sequence is the longest instance of that COG across the samples. The .csv file can be big (>1 GB), as it contains ALL COG definitions and not only core/accessory.
+
+Additionally, CLARC needs a text file with the names of the samples in your population of interest. The linkage constraints will be calculated based on this population. This can be all location from a particular geographic location, for example. This file should be named 'needed_sample_names.txt'. In this example, we will be running CLARC to refine the COG definitions in the Navajo population (937 samples).
+
+You can download the CLARC input files from this [google drive folder](https://drive.google.com/drive/folders/1cfJtgLX9w2DGSb90K965lf_sxNn3k36f?usp=sharing).
+
+These three inputs should be put in the `/nfds-tutorial/exercises/pangenome_analysis/clarc/data` subfolder. 
 
 Afterwards, clarc can be run from the terminal (within the environment):
 
