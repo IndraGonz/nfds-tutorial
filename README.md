@@ -261,13 +261,23 @@ To do this, we input an external clustering file into PopPUNK, which contains in
 
 **NOTE:** The version of PopPUNK supported by the GPS is not compatible with the Mac M1 architecture. Linux is recommended.
 
-All that is needed is included within this repository, including the external files and a conda environment for PopPUNK. Besides that, PopPUNK needs a text file containing the name and path of every sample to be included in the analysis (called a qfile). 
+To run PopPUNK with external clustering, we need the database files provided by the GPS. These can be found in this [google drive folder](https://drive.google.com/drive/folders/1NvBlf_KX_H3ZuYwrNiGPoD5kBRHJwBkk?usp=sharing). Download both the `GPS_v8_external_clusters.csv` file and the `GPS_v8_ref` folder and place them in the `~/nfds-tutorial/exercises/poppunk/databases` folder within this repository. When running the poppunk command, you need to specify the location of these files.
 
-With this we can proceed to run PopPUNK for the Navajo samples:
+PopPUNK uses the genome assemblies (.fasta files) to perform the GPSC assignment. We will use the assemblies found in the `nfds-tutorial/exercises/pangenome_analysis/assemblies` folder for this exercise. 
+
+As input, you must provide a text file where the first column is your sample's name and the second is the path of the assembly. This is called a q file (I am not sure why). The needed input text file for our exercise (`nfds_example_qfile.txt`) is already provided in the `nfds-tutorial/exercises/poppunk/data` folder within this repository. If you have copied the repository to a specific location of your computer/cluster, **make sure to update the paths in the nfds_example_qfile.txt file**.
+
+Generating the qfile can be annoying, so for your convenience I've also included here a bash [script](/scripts/make_poppunk_qfile.sh) that generates the qfile automatically by specifying the folder in which your fasta files are located. We don't need it for this example, however. 
+
+After you've downloaded/updated all files in their specified locations, we can proceed to run PopPUNK!
+
+First we create and activate the environment:
 
 ```bash
-# Activate poppunk environment
+# Create poppunk environment
 conda env create --file poppunk_env.yml
+
+# Activate poppunk environment
 conda activate poppunk_env
 
 # Run PopPUNK
