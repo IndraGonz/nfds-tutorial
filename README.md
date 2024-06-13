@@ -214,7 +214,7 @@ roary -o {1} -i 90 -e -n -z -v *.gff
 
 Roary assumes you are located in the folder that contains all the .gff files. It should not take too long to run on these three samples (), but for "real" runs with hundreds/thousands of samples, I highly recommend submitting as a cluster job allocating a fair bit of memory. I include an example of a bash script to do this in the [scripts](/scripts) folder named `torun_roary_cdc.sh`. Remember the script must be run from the folder containing the .gff files. In this script I allocate 1000 GB across 34 cores and for ~9000 samples it takes around 12 hours to run. 
 
-Here Roary is run on the default parameters, except for the identity threshold which is set at 90% (instead of 98%). Intermediate files are kept, but you can decide the parameters that work best for your specific purpose. For more information on Roary's parameters and output files I highly recommend readind [Roary's documentation](https://sanger-pathogens.github.io/Roary/) which is very thorough. 
+Here Roary is run on the default parameters, except for the identity threshold which is set at 90% (instead of 98%). Intermediate files are kept, but you can decide the parameters that work best for your specific purpose. For more information on Roary's parameters and output files I highly recommend readind [Roary's documentation](https://sanger-pathogens.github.io/Roary/) which is very thorough. Also, Roary with these settings generates _A LOT_ of files, so make sure to change the parameters to not keep intermediate files or that you have enough space.
 
 ### Clean Roary gene definitions with [CLARC](https://github.com/IndraGonz/CLARC) (obtain final presence absence matrix for accessory genes)
 
@@ -277,6 +277,8 @@ Afterwards, clarc can be run from the terminal (within the environment):
 # Run CLARC
 clarc --input_dir ~/nfds-tutorial/exercises/pangenome_analysis/clarc/data --output_dir ~/nfds-tutorial/exercises/pangenome_analysis/clarc/clarc_output
 ```
+
+Depending on how much memory is available, CLARC can take from 30 minutes to a couple of hours to run completely. It will create various subdirectories containing the linkage matrices creates, the eggnog functional annotations of the original accessory COGs and the results of the all vs all BLAST. However, the final results are located in the subdirectory named `/clarc_results`. In the future I will add an option to suppress the outputs, and I will update this document when I do. 
 
 ## Strain typing 
 
