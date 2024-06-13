@@ -22,13 +22,17 @@ git clone https://github.com/IndraGonz/nfds-tutorial.git
 ```
 This tutorial is structured to be run from the repository, but of course I'm not the boss of you and you can do as you wish!
 
+Finally, GitHub cannot host large files, so the raw input files used in this tutorial can be found in google drive. I will specify what files should be downloaded at each step and in what folder of the repository they should go in, to smoothly continue the tutorial.
+
+With all that said, let's get started!
+
 ## Data pre-processing
 
 In this step we will go from raw reads to assemblies, doing appropiate quality control for each step. 
 
 ### Setting up main environment
 
-Due to incompatibilities, two environments are used for this step: qc_assembly.yml and quast.yml. The qc_assembly environment is used for all cleaning and assembly steps, while quast is only used for the last step of assembly qc. Both of these files are located in the [envs](/envs) folder within this repository.
+Due to incompatibilities, three environments are used for this step: `qc_assembly.yml, unicycler.yml, quast.yml`. The qc_assembly environment is used for all cleaning steps, unicycler is used for assembly and quast is only used for the last step of assembly qc. All of these files are located in the [envs](/envs) folder within this repository.
 
 **Note:** We will be creating a lot of different environments for this tutorial. Like A LOT of environments so, bear with me. It's one way I've found to minimize things conflicting and crashing.
 
@@ -51,6 +55,10 @@ conda activate qc_assembly
 ```
 
 Now you should be able to run the data pre-processing steps. For these examples we will be using sample [ERR065307](https://www.ncbi.nlm.nih.gov/sra/ERR065307) as a case study.
+
+As previously mentioned, you can download both the raw read files and the adapter file needed to run trimmommatic (`NexteraPE-PE.fa`) from this [google drive folder](https://drive.google.com/drive/folders/1sSb7NM1VYhXeSLlXKdYsRk5M3yqsJlm0?usp=sharing).
+
+These three files should be downloaded in to the `nfds-tutorial/exercises/data_preprocessing/reads` folder within this repository.
 
 ### Read cleaning with [Trimmomatic](https://github.com/timflutre/trimmomatic)
 
