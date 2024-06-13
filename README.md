@@ -15,6 +15,13 @@ This tutorial relies heavily on conda environments so a conda installation is as
 
 I will focus on the most simple excution of each command. However, for the steps in which the same command is generally run for multiple files (cleaning, annotations, assemblies, etc.) I use bash scripts to perform the step in batch, which is more useful and closer to how we run these analyses. They are especially helpful if you want to submit jobs on a computing cluster. These scripts are found in the [scripts](/scripts) folder within this repository.
 
+If you wish to run these exercises locally (or from a cluster), you can copy the repository:
+
+```bash
+git clone https://github.com/IndraGonz/nfds-tutorial.git
+```
+This tutorial is structured to be run from the repository, 
+
 ## Data pre-processing
 
 In this step we will go from raw reads to assemblies, doing appropiate quality control for each step. 
@@ -23,10 +30,16 @@ In this step we will go from raw reads to assemblies, doing appropiate quality c
 
 Due to incompatibilities, two environments are used for this step: qc_assembly.yml and quast.yml. The qc_assembly environment is used for all cleaning and assembly steps, while quast is only used for the last step of assembly qc. Both of these files are located in the [envs](/envs) folder within this repository.
 
+**Note:** We will be creating a lot of different environments for this tutorial. For this the conda create command must be run from the envs folder which contains the .yml files. So the unspoken pre-command for all the 'conda create' commands in this tutorial is:
+
+```bash
+cd ~/nfds-tutorial/envs
+```
+
 To create the conda environments for the read cleaning and assembly steps:
 
 ```bash
-conda env create --file envs/qc_assembly.yml
+conda env create --file qc_assembly.yml
 ```
 
 then activate the environment:
