@@ -58,7 +58,7 @@ Now you should be able to run the data pre-processing steps. For these examples 
 
 As previously mentioned, you can download both the raw read files and the adapter file needed to run trimmommatic (`NexteraPE-PE.fa`) from this [google drive folder](https://drive.google.com/drive/folders/1sSb7NM1VYhXeSLlXKdYsRk5M3yqsJlm0?usp=sharing).
 
-These three files should be downloaded in to the `nfds-tutorial/exercises/data_preprocessing/reads` folder within this repository.
+These three files should be downloaded into the `nfds-tutorial/exercises/data_preprocessing/reads` folder within this repository.
 
 ### Read cleaning with [Trimmomatic](https://github.com/timflutre/trimmomatic)
 
@@ -99,13 +99,13 @@ Now you can assess the read quality accross all samples.
 
 ### Assembly with [Unicycler](https://github.com/rrwick/Unicycler?tab=readme-ov-file#quick-usage)
 
-Assemblies are one of the most computationally intensive steps in the pipeline. Thus, they are usually run in high performance computing clusters. It generally requires a fair bit of memory, and the program will fail if it runs out of memory. Thus, I recommend submitting this command as a job in your favorite high performance computer cluster. In the [scripts](/scripts) folder I have included a bash script named 'run_unicycler_nfds_example.sh' that runs unicycler for the one sample we are using as an example. This script is formatted specifically for the [FasRC](https://www.rc.fas.harvard.edu/) cluster at Harvard University, so make sure to update the format/paths/etc. It is just meant to serve as an example.
+Assemblies are one of the most computationally intensive steps in the pipeline. Thus, they are usually run in high performance computing clusters. It generally requires a fair bit of memory, and the program will fail if it runs out of memory. Thus, I recommend submitting this command as a job in your favorite high performance computer cluster. In the [scripts](/scripts) folder I have included a bash script named `run_unicycler_nfds_example.sh` that runs unicycler for the one sample we are using as an example. This script is formatted specifically for the [FasRC](https://www.rc.fas.harvard.edu/) cluster at Harvard University, so make sure to update the format/paths/etc. It is just meant to serve as an example.
 
 The bash script mentioned above allocated 36 GB of memory across 16 cores. This might be overkill for a single sample, but it did run. Of course if you are running multiple samples make sure to allocate memory appropiately. Using that script, the assembly took 12 minutes and 32 seconds to run.
 
 You can also run it from the command line directly, if you've allocated enough memory. Below is an example of how to do that.
 
-Unicycler is a bit sensitive to package versions, so we create and activate a different environment from the 'unicycler.yml' file:
+Unicycler is a bit sensitive to package versions, so we create and activate a different environment from the `unicycler.yml` file:
 
 ```bash
 conda env create --file unicycler.yml
@@ -118,7 +118,7 @@ Now, from the folder containing the trimmed reads you can run Unicycler:
 unicycler -1 ERR065307_R1_trimmed.fastq.gz -2 ERR065307_R2_trimmed.fastq.gz -o ~/nfds-tutorial/exercises/data_preprocessing/assemblies/ERR065307_assembly
 ```
 
-Unicycler generates many output files, and there will be one folder per sample. In this case our folder is named 'ERR065307_assembly' because that is what we specified. The resulting assembly will be the file named 'assembly.fasta' in this output folder.
+Unicycler generates many output files, and there will be one folder per sample. In this case our folder is `~/ERR065307_assembly` because that is what we specified. The resulting assembly will be the file named `assembly.fasta` in this output folder.
 
 ### Assembly quality control with [Quast](https://github.com/ablab/quast)
 
@@ -144,9 +144,13 @@ iii) A genome length <1.9 Mb or > 2.4 Mb
 
 ## Pangenome analysis
 
-We can now move on the the pangenome analysis exercise. For this exercise, we will be using the [Navajo population](https://www-ncbi-nlm-nih-gov.ezp-prod1.hul.harvard.edu/bioproject/PRJEB8327) as an example for this exercise. Running these analysis on a linux cluster is recommended, since some architectures are not compatible with the packages.
+We can now move on the the pangenome analysis exercise. For this exercise, we will be using 3 samples in the [Navajo population](https://www-ncbi-nlm-nih-gov.ezp-prod1.hul.harvard.edu/bioproject/PRJEB8327) as an example for the first couple of steps in this exercise. Running these analyses on a linux cluster is recommended, since some architectures are not compatible with the packages.
 
-The first step is to navigate to the exercise subfolder:
+First download the 3 fasta files we will use from this [google drive folder](https://drive.google.com/drive/folders/1969ZeuSHZK8Xfx1wmXalc4ttI_JEMC44?usp=sharing). 
+
+These three files should be downloaded into the `/nfds-tutorial/exercises/pangenome_analysis/assemblies` folder within this repository.
+
+After data download, the first step is to navigate to the exercise subfolder:
 
 ```bash
 cd ~/nfds-tutorial/exercises/pangenome_analysis
