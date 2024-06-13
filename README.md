@@ -351,7 +351,7 @@ Then we activate:
 conda activate rpy-env
 ```
 
-** Within the rpy environment**, launch jupyter lab:
+**Within the rpy environment**, launch jupyter lab:
 
 ```bash
 jupyter-lab
