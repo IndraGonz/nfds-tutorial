@@ -20,7 +20,7 @@ If you wish to run these exercises locally (or from a cluster), you can copy the
 ```bash
 git clone https://github.com/IndraGonz/nfds-tutorial.git
 ```
-This tutorial is structured to be run from the repository, but of course I'm not the boss of you and you can rebel by running these exercises however you want.  
+This tutorial is structured to be run from the repository, but of course I'm not the boss of you and you can do as you wish!
 
 ## Data pre-processing
 
