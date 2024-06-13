@@ -205,10 +205,14 @@ This command goes into each prokka subfolder, finds the .gff files and then copi
 Afterwards, in the designated folder containing all annotation files, we can proceed to run Roary:
 
 ```bash
+# Navigate to roary folder
+cd ~/nfds-tutorial/exercises/pangenome_analysis/roary
+
+# Run roary
 roary -o {1} -i 90 -e -n -z -v *.gff
 ```
 
-Roary assumes you are located in the folder that contains all the .gff files.
+Roary assumes you are located in the folder that contains all the .gff files. It should not take too long to run on these three samples (), but for "real" runs with hundreds/thousands of samples, I highly recommend submitting as a cluster job allocating a fair bit of memory. I include an example of a bash script to do this in the [scripts](/scripts) folder named `torun_roary_cdc.sh`. Remember the script must be run from the folder containing the .gff files. In this script I allocate 1000 GB across 34 cores and for ~9000 samples it takes around 12 hours to run. 
 
 Here Roary is run on the default parameters, except for the identity threshold which is set at 90% (instead of 98%). Intermediate files are kept, but you can decide the parameters that work best for your specific purpose. For more information on Roary's parameters and output files I highly recommend readind [Roary's documentation](https://sanger-pathogens.github.io/Roary/) which is very thorough. 
 
