@@ -230,19 +230,46 @@ You can download the CLARC input files from this [google drive folder](https://d
 
 These three inputs should be put in the `/nfds-tutorial/exercises/pangenome_analysis/clarc/data` subfolder. 
 
+#### Installing CLARC
+
 Now, we have gotten to the exciting part of installing CLARC! As it is in the beta testing stage, we first build the given CLARC environment to install all dependencies and then we install the tool by copying the CLARC repository directly from GitHub.
 
+For the installation, make sure you've installed git. If you have not, you can easily do so with:
+
 ```bash
-# Create CLARC environment
+conda install git
+```
+Afterwards you can proceed to install CLARC:
 
-# Activate CLARC environment
+```bash
+# Clone repository from GitHub (the repository will be cloned in your current working directory)
+git clone https://github.com/IndraGonz/CLARC.git
 
-# Copy CLARC repository from GitHub
+# Navigate to envs folder
+cd CLARC/envs
+
+# Create environment from yml file
+conda env create --file clarc_env.yml
+
+# Activate environment
+conda activate clarc_env
+
+# Navigate to main CLARC folder
+cd CLARC
 
 # Install CLARC
-
-# Check that CLARC was successfully installed
+python setup.py install
 ```
+
+To check that clarc was installed correctly just write:
+
+```bash
+clarc --version
+```
+
+If it shows the version then it has been installed correctly!
+
+#### Running CLARC
 
 Afterwards, clarc can be run from the terminal (within the environment):
 
@@ -279,12 +306,16 @@ conda env create --file poppunk_env.yml
 
 # Activate poppunk environment
 conda activate poppunk_env
-
-# Run PopPUNK
-poppunk_assign --db ~/GPS_v8_ref --external-clustering ~/GPS_v8_external_clusters.csv --query ~/nfds-tutorial/exercises/poppunk/navajo/navajo_qfile.txt --output ~/nfds-tutorial/exercises/poppunk/navajo/poppunk_typing
 ```
 
-The general GPSC assignments will be located in the 'poppunk_typing_external_clusters.csv' output file.
+And now we can execute the poppunk assign command:
+
+```bash
+# Run PopPUNK
+poppunk_assign --db ~/nfds-tutorial/exercises/poppunk/databases/GPS_v8_ref --external-clustering ~/nfds-tutorial/exercises/poppunk/databases/GPS_v8_external_clusters.csv --query ~/nfds-tutorial/exercises/poppunk/data/nfds_example_qfile.txt --output ~/nfds-tutorial/exercises/poppunk/data
+```
+
+The general GPSC assignments will be located in the 'poppunk_typing_external_clusters.csv' output file in the `/nfds-tutorial/exercises/poppunk/data` folder.
 
 ## Quadratic programming model 
 
