@@ -13,7 +13,7 @@ Simple tutorial of technical workflow to study negative frequency dependent sele
 
 This tutorial relies heavily on conda environments so a conda installation is assumed. For quick and simple instructions of how to locally install conda with miniconda follow [this link](https://docs.anaconda.com/free/miniconda/#quick-command-line-install).
 
-I will focus on the most simple excution of each command. However, for the steps in which the same command is generally run for multiple files (cleaning, annotations, assemblies, etc.) I use bash scripts to perform the step in batch, which is more useful and closer to how we run these analyses. They are especially helpful if you want to submit jobs on a computing cluster. These scripts are found in the [scripts](/scripts) folder within this repository.
+I will focus on the most simple execution of each command. However, for the steps in which the same command is generally run for multiple files (cleaning, annotations, assemblies, etc.) I use bash scripts to perform the step in batch, which is more useful and closer to how we run these analyses. They are especially helpful if you want to submit jobs on a computing cluster. These scripts are found in the [scripts](/scripts) folder within this repository.
 
 If you wish to run these exercises locally (or from a cluster), you can copy the repository:
 
@@ -93,9 +93,9 @@ Now you can assess the read quality accross all samples.
 
 Assemblies are one of the most computationally intensive steps in the pipeline. Thus, they are usually run in high performance computing clusters. It generally requires a fair bit of memory, and the program will fail if it runs out of memory. Thus, I recommend submitting this command as a job in your favorite high performance computer cluster. In the [scripts](/scripts) folder I have included a bash script named 'run_unicycler_nfds_example.sh' that runs unicycler for the one sample we are using as an example. This script is formatted specifically for the [FasRC](https://www.rc.fas.harvard.edu/) cluster at Harvard University, so make sure to update the format/paths/etc. It is just meant to serve as an example.
 
-The bash script mentioned above allocated 36 GB of memory across 16 cores. This might be overkill for a single sample, but it did run. Of course if you are running multiple samples make sure to allocate memory appropiately. 
+The bash script mentioned above allocated 36 GB of memory across 16 cores. This might be overkill for a single sample, but it did run. Of course if you are running multiple samples make sure to allocate memory appropiately. Using that script, the assembly took 12 minutes and 32 seconds to run.
 
-You can also just run it from the command line directly, if you've allocated enough memory. Below is an example of how to do that.
+You can also run it from the command line directly, if you've allocated enough memory. Below is an example of how to do that.
 
 Unicycler is a bit sensitive to package versions, so we create and activate a different environment from the 'unicycler.yml' file:
 
@@ -109,7 +109,8 @@ Now, from the folder containing the trimmed reads you can run Unicycler:
 ```bash
 unicycler -1 ERR065307_R1_trimmed.fastq.gz -2 ERR065307_R2_trimmed.fastq.gz -o ~/nfds-tutorial/exercises/data_preprocessing/assemblies/ERR065307_assembly
 ```
-Unicycler generates many output files, and there will be one folder per sample. The resulting assembly will be named 'assembly.fasta'
+
+Unicycler generates many output files, and there will be one folder per sample. In this case our folder is named 'ERR065307_assembly' because that is what we specified. The resulting assembly will be the file named 'assembly.fasta' in this output folder.
 
 ### Assembly quality control with [Quast](https://github.com/ablab/quast)
 
