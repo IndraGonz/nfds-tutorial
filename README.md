@@ -294,7 +294,7 @@ To run PopPUNK with external clustering, we need the database files provided by 
 
 PopPUNK uses the genome assemblies (.fasta files) to perform the GPSC assignment. We will use the assemblies found in the `nfds-tutorial/exercises/pangenome_analysis/assemblies` folder for this exercise. 
 
-As input, you must provide a text file where the first column is your sample's name and the second is the path of the assembly. This is called a q file (I am not sure why). The needed input text file for our exercise (`nfds_example_qfile.txt`) is already provided in the `nfds-tutorial/exercises/poppunk/data` folder within this repository. If you have copied the repository to a specific location of your computer/cluster, **make sure to update the paths in the nfds_example_qfile.txt file**.
+As input, you must provide a text file where the first column is your sample's name and the second is the path of the assembly. This is called a q file (I am not sure why). The needed input text file for our exercise (`nfds_example_qfile.txt`) is already provided in the `nfds-tutorial/exercises/poppunk/data` folder within this repository. If you have copied the repository to a specific location of your computer/cluster, **make sure to update the paths in the `nfds_example_qfile.txt` file**.
 
 Generating the qfile can be annoying, so for your convenience I've also included here a bash [script](/scripts/make_poppunk_qfile.sh) that generates the qfile automatically by specifying the folder in which your fasta files are located. We don't need it for this example, however. 
 
@@ -317,7 +317,7 @@ And now we can execute the poppunk assign command:
 poppunk_assign --db ~/nfds-tutorial/exercises/poppunk/databases/GPS_v8_ref --external-clustering ~/nfds-tutorial/exercises/poppunk/databases/GPS_v8_external_clusters.csv --query ~/nfds-tutorial/exercises/poppunk/data/nfds_example_qfile.txt --output ~/nfds-tutorial/exercises/poppunk/data
 ```
 
-The general GPSC assignments will be located in the 'poppunk_typing_external_clusters.csv' output file in the `/nfds-tutorial/exercises/poppunk/data` folder.
+The general GPSC assignments will be located in the `poppunk_typing_external_clusters.csv` output file in the `/nfds-tutorial/exercises/poppunk/data` folder.
 
 ## Quadratic programming (QP) model 
 
