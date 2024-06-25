@@ -6,7 +6,7 @@ Simple tutorial of technical workflow to study negative frequency dependent sele
 2. [Data pre-processing](#data-pre-processing)
 3. [Pangenome analysis](#pangenome-analysis)
 4. [Strain typing](#strain-typing)
-5. [Quadratic programming model](#quadratic-programming-(qp)-model)
+5. [Quadratic programming model](#quadratic-programming-qp-model)
 6. [Conclusion](#conclusion)
 
 ## Introduction
